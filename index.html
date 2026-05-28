@@ -1,807 +1,579 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Souleymane Kande — Portfolio</title>
-
-  <!-- =============================================
-       POLICES GOOGLE FONTS
-       - Syne         : titre display, caractère fort
-       - JetBrains Mono : accent "code", très tech
-  ============================================= -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet" />
-
-  <!-- Icônes (Font Awesome via CDN) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <!-- Feuille de style principale -->
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Souleymane Kande | Portfolio Génie Informatique</title>
+    
+    <!-- Lien vers la feuille de style CSS externe -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Importation des icônes Font Awesome pour les réseaux sociaux -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
-  <!-- ================================================
-       CURSEUR PERSONNALISÉ
-       Deux cercles qui suivent la souris avec du lag
-  ================================================ -->
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- ================================================
-       ÉCRAN DE CHARGEMENT
-       S'affiche 2s puis disparaît avec animation
-  ================================================ -->
-  <div class="loader" id="loader">
-    <div class="loader-inner">
-      <div class="loader-logo">SK</div>
-      <div class="loader-bar">
-        <div class="loader-progress" id="loaderProgress"></div>
-      </div>
-      <p class="loader-text">Initialisation du portfolio…</p>
-    </div>
-  </div>
-
-  <!-- ================================================
-       CANVAS DE PARTICULES (fond animé)
-       Le JavaScript dessine des étoiles + connexions
-  ================================================ -->
-  <canvas id="particleCanvas"></canvas>
-
-  <!-- ================================================
-       BARRE DE PROGRESSION DU SCROLL (en haut de page)
-  ================================================ -->
-  <div class="scroll-progress" id="scrollProgress"></div>
-
-  <!-- ================================================
-       NAVIGATION PRINCIPALE
-       Sticky, se colore au scroll, burger sur mobile
-  ================================================ -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-logo">
-      <!-- Logo texte avec accent néon -->
-      <span class="logo-bracket">&lt;</span>SK<span class="logo-bracket">/&gt;</span>
-    </div>
-
-    <!-- Liens de navigation — ajoutez/retirez selon vos sections -->
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#accueil"  class="nav-link" data-text="Accueil">Accueil</a></li>
-      <li><a href="#about"    class="nav-link" data-text="À propos">À propos</a></li>
-      <li><a href="#skills"   class="nav-link" data-text="Compétences">Compétences</a></li>
-      <li><a href="#projets"  class="nav-link" data-text="Projets">Projets</a></li>
-      <li><a href="#parcours" class="nav-link" data-text="Parcours">Parcours</a></li>
-      <li><a href="#contact"  class="nav-link" data-text="Contact">Contact</a></li>
-    </ul>
-
-    <!-- Bouton burger (mobile) -->
-    <button class="burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- ================================================
-       SECTION HERO / ACCUEIL
-  ================================================ -->
-  <section class="hero" id="accueil">
-    <!-- Badge animé en haut -->
-    <div class="hero-badge fade-in-up delay-1">
-      <span class="badge-dot"></span>
-      Disponible pour un stage / alternance
-    </div>
-
-    <!-- Titre principal avec effet de frappe -->
-    <h1 class="hero-title fade-in-up delay-2">
-      Bonjour, je suis<br />
-      <span class="name-highlight">Souleymane</span>
-      <span class="name-highlight accent2"> Kande</span>
-    </h1>
-
-    <!-- Sous-titre avec animation de frappe (géré en JS) -->
-    <div class="hero-subtitle fade-in-up delay-3">
-      <span class="typing-prefix">$ whoami → </span>
-      <span class="typing-text" id="typingText"></span>
-      <span class="typing-cursor">|</span>
-    </div>
-
-    <!-- Description courte -->
-    <p class="hero-desc fade-in-up delay-4">
-      Étudiant en 3ème année de <strong>Génie Informatique</strong>, passionné par
-      le développement logiciel, les algorithmes et la construction de solutions
-      élégantes à des problèmes complexes.
-    </p>
-
-    <!-- Boutons CTA -->
-    <div class="hero-cta fade-in-up delay-5">
-      <a href="#projets" class="btn btn-primary">
-        <i class="fas fa-rocket"></i> Voir mes projets
-      </a>
-      <a href="#contact" class="btn btn-secondary">
-        <i class="fas fa-paper-plane"></i> Me contacter
-      </a>
-    </div>
-
-    <!-- Stats flottantes -->
-    <div class="hero-stats fade-in-up delay-5">
-      <div class="stat-card">
-        <span class="stat-number" data-count="6">0</span>
-        <span class="stat-label">Langages maîtrisés</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-number" data-count="12">0</span>
-        <span class="stat-label">Projets réalisés</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-number" data-count="3">0</span>
-        <span class="stat-label">Années d'études</span>
-      </div>
-    </div>
-
-    <!-- Flèche de scroll -->
-    <a href="#about" class="scroll-arrow fade-in-up delay-5" aria-label="Défiler vers le bas">
-      <i class="fas fa-chevron-down"></i>
-    </a>
-  </section>
-
-  <!-- ================================================
-       SECTION À PROPOS
-  ================================================ -->
-  <section class="about reveal-section" id="about">
-    <div class="container">
-      <!-- En-tête de section (réutilisé dans chaque section) -->
-      <div class="section-header">
-        <span class="section-tag">// 01</span>
-        <h2 class="section-title">À propos <span class="accent">de moi</span></h2>
-        <div class="section-line"></div>
-      </div>
-
-      <div class="about-grid">
-        <!-- Colonne photo / avatar -->
-        <div class="about-visual reveal-left">
-          <div class="about-photo-wrap">
-            <!-- Remplacez "votre-photo.jpg" par le chemin de votre vraie photo -->
-            <div class="photo-placeholder">
-              <span>SK</span>
-              <!-- Décommentez la ligne suivante et supprimez le div.photo-placeholder quand vous avez votre photo :
-              <img src="votre-photo.jpg" alt="Souleymane Kande" /> -->
+    <!-- Particules d'arrière-plan animées (générées par JavaScript) -->
+    <div class="particles-container" id="particles"></div>
+    
+    <!-- HEADER - Navigation principale avec effet glassmorphism -->
+    <header class="header">
+        <nav class="nav">
+            <!-- Logo avec animation de texte -->
+            <div class="logo">
+                <span class="logo-text">&lt;SK/&gt;</span>
             </div>
-            <!-- Éléments décoratifs autour de la photo -->
-            <div class="photo-ring ring-1"></div>
-            <div class="photo-ring ring-2"></div>
-            <div class="photo-badge">
-              <i class="fas fa-graduation-cap"></i>
-              <span>3ème année G.I.</span>
+            
+            <!-- Menu de navigation avec liens ancrés -->
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Accueil</a></li>
+                <li><a href="#about" class="nav-link">À propos</a></li>
+                <li><a href="#skills" class="nav-link">Compétences</a></li>
+                <li><a href="#projects" class="nav-link">Projets</a></li>
+                <li><a href="#education" class="nav-link">Formation</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <!-- Bouton menu mobile (hamburger) -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-          </div>
-        </div>
+        </nav>
+    </header>
 
-        <!-- Colonne texte -->
-        <div class="about-content reveal-right">
-          <p class="about-text">
-            Je suis <strong>Souleymane Kande</strong>, étudiant en Génie Informatique.
-            Ma passion pour la programmation a débuté bien avant l'université —
-            résoudre des problèmes avec du code, c'est ma façon de penser.
-          </p>
-          <p class="about-text">
-            Je construis des applications alliant <strong>logique algorithmique</strong>
-            et <strong>expérience utilisateur soignée</strong>. Du bas niveau en C/C++
-            jusqu'aux interfaces web dynamiques, j'aime couvrir tout le spectre du
-            développement.
-          </p>
-          <p class="about-text">
-            En dehors du code, je m'intéresse à l'intelligence artificielle,
-            aux bases de données et à la résolution de défis logiques.
-          </p>
-
-          <!-- Infos rapides en grille -->
-          <div class="about-info-grid">
-            <!-- Modifiez ces infos selon votre situation réelle -->
-            <div class="info-item">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Conakry, Guinée</span>  <!-- ← CHANGEZ selon votre ville -->
+    <!-- SECTION ACCUEIL - Hero avec animations -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <!-- Badge animé indiquant le statut -->
+            <div class="status-badge">
+                <span class="pulse"></span>
+                Disponible pour stage
             </div>
-            <div class="info-item">
-              <i class="fas fa-university"></i>
-              <span>3ème année G.I.</span>
+            
+            <!-- Titre principal avec effet de typing -->
+            <h1 class="hero-title">
+                Salut, je suis <span class="gradient-text">Souleymane Kande</span>
+            </h1>
+            
+            <!-- Sous-titre avec effet de machine à écrire -->
+            <div class="typewriter-container">
+                <span id="typewriter" class="typewriter"></span>
+                <span class="cursor">|</span>
             </div>
-            <div class="info-item">
-              <i class="fas fa-envelope"></i>
-              <span>email@example.com</span>  <!-- ← CHANGEZ par votre email -->
-            </div>
-            <div class="info-item">
-              <i class="fas fa-language"></i>
-              <span>Français · Anglais</span>
-            </div>
-          </div>
-
-          <!-- Bouton CV -->
-          <a href="#" class="btn btn-primary mt-2">
-            <i class="fas fa-download"></i> Télécharger mon CV
-            <!-- ↑ Remplacez href="#" par le lien vers votre PDF de CV -->
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================================================
-       SECTION COMPÉTENCES / SKILLS
-  ================================================ -->
-  <section class="skills reveal-section" id="skills">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">// 02</span>
-        <h2 class="section-title">Mes <span class="accent">compétences</span></h2>
-        <div class="section-line"></div>
-      </div>
-
-      <!-- Grille des cartes de compétences -->
-      <div class="skills-grid">
-
-        <!-- ── Carte HTML/CSS ── -->
-        <div class="skill-card reveal-up" data-delay="0">
-          <div class="skill-icon">
-            <i class="fab fa-html5"></i>
-          </div>
-          <h3 class="skill-name">HTML / CSS</h3>
-          <p class="skill-desc">Structuration sémantique, Flexbox, Grid, animations CSS, design responsive.</p>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar" data-percent="85">
-              <div class="skill-fill"></div>
-            </div>
-            <span class="skill-percent">85%</span>
-          </div>
-        </div>
-
-        <!-- ── Carte JavaScript ── -->
-        <div class="skill-card reveal-up" data-delay="100">
-          <div class="skill-icon">
-            <i class="fab fa-js-square"></i>
-          </div>
-          <h3 class="skill-name">JavaScript</h3>
-          <p class="skill-desc">Manipulation du DOM, ES6+, fetch API, animations, logique applicative.</p>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar" data-percent="80">
-              <div class="skill-fill"></div>
-            </div>
-            <span class="skill-percent">80%</span>
-          </div>
-        </div>
-
-        <!-- ── Carte Python ── -->
-        <div class="skill-card reveal-up" data-delay="200">
-          <div class="skill-icon">
-            <i class="fab fa-python"></i>
-          </div>
-          <h3 class="skill-name">Python</h3>
-          <p class="skill-desc">Scripts, manipulation de données, automatisation, algorithmes, bibliothèques scientifiques.</p>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar" data-percent="82">
-              <div class="skill-fill"></div>
-            </div>
-            <span class="skill-percent">82%</span>
-          </div>
-        </div>
-
-        <!-- ── Carte C ── -->
-        <div class="skill-card reveal-up" data-delay="300">
-          <div class="skill-icon">
-            <!-- Icône générique pour C -->
-            <i class="fas fa-code"></i>
-          </div>
-          <h3 class="skill-name">Langage C</h3>
-          <p class="skill-desc">Programmation bas niveau, pointeurs, gestion mémoire, structures de données.</p>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar" data-percent="78">
-              <div class="skill-fill"></div>
-            </div>
-            <span class="skill-percent">78%</span>
-          </div>
-        </div>
-
-        <!-- ── Carte C++ ── -->
-        <div class="skill-card reveal-up" data-delay="400">
-          <div class="skill-icon">
-            <i class="fas fa-cogs"></i>
-          </div>
-          <h3 class="skill-name">C++</h3>
-          <p class="skill-desc">POO, héritage, polymorphisme, STL, templates, gestion avancée de la mémoire.</p>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar" data-percent="75">
-              <div class="skill-fill"></div>
-            </div>
-            <span class="skill-percent">75%</span>
-          </div>
-        </div>
-
-        <!-- ── Carte SQL ── -->
-        <div class="skill-card reveal-up" data-delay="500">
-          <div class="skill-icon">
-            <i class="fas fa-database"></i>
-          </div>
-          <h3 class="skill-name">SQL</h3>
-          <p class="skill-desc">Modélisation relationnelle, requêtes complexes, jointures, procédures stockées, MySQL/PostgreSQL.</p>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar" data-percent="80">
-              <div class="skill-fill"></div>
-            </div>
-            <span class="skill-percent">80%</span>
-          </div>
-        </div>
-
-      </div><!-- fin .skills-grid -->
-
-      <!-- ── Outils & technologies ── -->
-      <div class="tools-section reveal-up">
-        <h3 class="tools-title">Outils & environnements</h3>
-        <div class="tools-tags">
-          <!-- Ajoutez ou retirez des tags selon vos vrais outils -->
-          <span class="tag"><i class="fab fa-git-alt"></i> Git</span>
-          <span class="tag"><i class="fab fa-github"></i> GitHub</span>
-          <span class="tag"><i class="fas fa-terminal"></i> Linux / Bash</span>
-          <span class="tag"><i class="fas fa-code-branch"></i> VS Code</span>
-          <span class="tag"><i class="fas fa-server"></i> MySQL</span>
-          <span class="tag"><i class="fas fa-flask"></i> Algorithmique</span>
-          <span class="tag"><i class="fas fa-project-diagram"></i> UML</span>
-          <span class="tag"><i class="fas fa-network-wired"></i> Réseaux</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================================================
-       SECTION PROJETS
-  ================================================ -->
-  <section class="projects reveal-section" id="projets">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">// 03</span>
-        <h2 class="section-title">Mes <span class="accent">projets</span></h2>
-        <div class="section-line"></div>
-      </div>
-
-      <!-- Filtres de catégories -->
-      <div class="filter-bar reveal-up">
-        <button class="filter-btn active" data-filter="all">Tous</button>
-        <button class="filter-btn" data-filter="web">Web</button>
-        <button class="filter-btn" data-filter="system">Système / C·C++</button>
-        <button class="filter-btn" data-filter="python">Python</button>
-        <button class="filter-btn" data-filter="data">Base de données</button>
-      </div>
-
-      <!-- Grille de projets -->
-      <div class="projects-grid" id="projectsGrid">
-
-        <!-- ──────────────────────────────────────────
-             PROJET 1 : Site e-commerce (Web)
-             Modifiez titre, description, tags, lien GitHub, image
-        ────────────────────────────────────────── -->
-        <article class="project-card reveal-up" data-category="web" data-delay="0">
-          <div class="card-image">
-            <!-- Image générique e-commerce via picsum (remplacez par vos captures) -->
-            <img
-              src="https://images.unsplash.com/photo-1557821552-17105176677c?w=600&q=80"
-              alt="Projet site e-commerce"
-              loading="lazy"
-            />
-            <div class="card-overlay">
-              <div class="overlay-links">
-                <!-- Remplacez # par vos vrais liens -->
-                <a href="#" class="overlay-btn" aria-label="Voir le code source"><i class="fab fa-github"></i></a>
-                <a href="#" class="overlay-btn" aria-label="Voir la démo live"><i class="fas fa-external-link-alt"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-tags">
-              <span class="card-tag tag-web">HTML</span>
-              <span class="card-tag tag-web">CSS</span>
-              <span class="card-tag tag-web">JavaScript</span>
-            </div>
-            <h3 class="card-title">Boutique en ligne</h3>
-            <p class="card-desc">
-              Interface complète d'une boutique e-commerce : catalogue produits,
-              panier dynamique, filtres et système de commande — 100% front-end.
+            
+            <!-- Description -->
+            <p class="hero-description">
+                Étudiant en 3ème année Génie Informatique, passionné par le développement web, 
+                les bases de données et l'administration système. Je transforme des idées en solutions numériques innovantes.
             </p>
-          </div>
-        </article>
-
-        <!-- ──────────────────────────────────────────
-             PROJET 2 : Gestion de bibliothèque (SQL + Python)
-        ────────────────────────────────────────── -->
-        <article class="project-card reveal-up" data-category="data" data-delay="100">
-          <div class="card-image">
-            <img
-              src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80"
-              alt="Gestion de bibliothèque"
-              loading="lazy"
-            />
-            <div class="card-overlay">
-              <div class="overlay-links">
-                <a href="#" class="overlay-btn" aria-label="Code source"><i class="fab fa-github"></i></a>
-                <a href="#" class="overlay-btn" aria-label="Démo"><i class="fas fa-external-link-alt"></i></a>
-              </div>
+            
+            <!-- Boutons d'action -->
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">
+                    <i class="fas fa-folder-open"></i> Voir mes projets
+                </a>
+                <a href="#contact" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i> Me contacter
+                </a>
+                <a href="#" class="btn btn-outline" id="downloadCV">
+                    <i class="fas fa-download"></i> Télécharger CV
+                </a>
             </div>
-          </div>
-          <div class="card-body">
-            <div class="card-tags">
-              <span class="card-tag tag-python">Python</span>
-              <span class="card-tag tag-data">SQL</span>
-              <span class="card-tag tag-data">MySQL</span>
+            
+            <!-- Réseaux sociaux -->
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-gitlab"></i></a>
             </div>
-            <h3 class="card-title">Système de bibliothèque</h3>
-            <p class="card-desc">
-              Application de gestion d'une bibliothèque universitaire : emprunts,
-              retours, recherches et statistiques — base de données relationnelle normalisée.
-            </p>
-          </div>
-        </article>
-
-        <!-- ──────────────────────────────────────────
-             PROJET 3 : Jeu de Morpion en C
-        ────────────────────────────────────────── -->
-        <article class="project-card reveal-up" data-category="system" data-delay="200">
-          <div class="card-image">
-            <img
-              src="https://images.unsplash.com/photo-1611996575749-79a3a250f948?w=600&q=80"
-              alt="Jeu de Morpion"
-              loading="lazy"
-            />
-            <div class="card-overlay">
-              <div class="overlay-links">
-                <a href="#" class="overlay-btn" aria-label="Code source"><i class="fab fa-github"></i></a>
-                <a href="#" class="overlay-btn" aria-label="Démo"><i class="fas fa-external-link-alt"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-tags">
-              <span class="card-tag tag-system">C</span>
-              <span class="card-tag tag-system">Algorithmique</span>
-            </div>
-            <h3 class="card-title">Morpion IA — Langage C</h3>
-            <p class="card-desc">
-              Jeu de morpion en mode console avec une IA adverse (algorithme Minimax),
-              interface ASCII et gestion complète des cas de victoire/match nul.
-            </p>
-          </div>
-        </article>
-
-        <!-- ──────────────────────────────────────────
-             PROJET 4 : Analyse de données Python
-        ────────────────────────────────────────── -->
-        <article class="project-card reveal-up" data-category="python" data-delay="300">
-          <div class="card-image">
-            <img
-              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80"
-              alt="Analyse de données"
-              loading="lazy"
-            />
-            <div class="card-overlay">
-              <div class="overlay-links">
-                <a href="#" class="overlay-btn" aria-label="Code source"><i class="fab fa-github"></i></a>
-                <a href="#" class="overlay-btn" aria-label="Démo"><i class="fas fa-external-link-alt"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-tags">
-              <span class="card-tag tag-python">Python</span>
-              <span class="card-tag tag-python">Pandas</span>
-              <span class="card-tag tag-python">Matplotlib</span>
-            </div>
-            <h3 class="card-title">Analyseur de données CSV</h3>
-            <p class="card-desc">
-              Script Python qui parse des fichiers CSV, calcule des statistiques
-              descriptives et génère des visualisations graphiques automatiques.
-            </p>
-          </div>
-        </article>
-
-        <!-- ──────────────────────────────────────────
-             PROJET 5 : Application C++ POO
-        ────────────────────────────────────────── -->
-        <article class="project-card reveal-up" data-category="system" data-delay="400">
-          <div class="card-image">
-            <img
-              src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80"
-              alt="Application C++"
-              loading="lazy"
-            />
-            <div class="card-overlay">
-              <div class="overlay-links">
-                <a href="#" class="overlay-btn" aria-label="Code source"><i class="fab fa-github"></i></a>
-                <a href="#" class="overlay-btn" aria-label="Démo"><i class="fas fa-external-link-alt"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-tags">
-              <span class="card-tag tag-system">C++</span>
-              <span class="card-tag tag-system">POO</span>
-              <span class="card-tag tag-system">STL</span>
-            </div>
-            <h3 class="card-title">Gestionnaire de contacts C++</h3>
-            <p class="card-desc">
-              Application orientée objet de gestion de contacts avec héritage,
-              fichiers de persistance et interface console ergonomique.
-            </p>
-          </div>
-        </article>
-
-        <!-- ──────────────────────────────────────────
-             PROJET 6 : Portfolio web (ce site)
-        ────────────────────────────────────────── -->
-        <article class="project-card reveal-up" data-category="web" data-delay="500">
-          <div class="card-image">
-            <img
-              src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80"
-              alt="Portfolio web"
-              loading="lazy"
-            />
-            <div class="card-overlay">
-              <div class="overlay-links">
-                <a href="#" class="overlay-btn" aria-label="Code source"><i class="fab fa-github"></i></a>
-                <a href="#" class="overlay-btn" aria-label="Démo"><i class="fas fa-external-link-alt"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-tags">
-              <span class="card-tag tag-web">HTML</span>
-              <span class="card-tag tag-web">CSS</span>
-              <span class="card-tag tag-web">JavaScript</span>
-            </div>
-            <h3 class="card-title">Portfolio personnel</h3>
-            <p class="card-desc">
-              Ce portfolio ! Animations CSS avancées, particules canvas, effets
-              de frappe, système de filtres et design responsive entièrement fait main.
-            </p>
-          </div>
-        </article>
-
-      </div><!-- fin .projects-grid -->
-    </div>
-  </section>
-
-  <!-- ================================================
-       SECTION PARCOURS (Timeline)
-  ================================================ -->
-  <section class="timeline-section reveal-section" id="parcours">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">// 04</span>
-        <h2 class="section-title">Mon <span class="accent">parcours</span></h2>
-        <div class="section-line"></div>
-      </div>
-
-      <!-- Ligne verticale de la timeline -->
-      <div class="timeline">
-
-        <!-- ── Étape 1 : Baccalauréat (modifiez selon votre réalité) ── -->
-        <div class="timeline-item reveal-left">
-          <div class="timeline-dot">
-            <i class="fas fa-school"></i>
-          </div>
-          <div class="timeline-card">
-            <span class="timeline-date">2019 – 2020</span>  <!-- ← CHANGEZ -->
-            <h3 class="timeline-title">Baccalauréat Scientifique</h3>
-            <p class="timeline-school">Lycée — Conakry, Guinée</p>  <!-- ← CHANGEZ -->
-            <p class="timeline-desc">
-              Obtention du baccalauréat série scientifique, mention bien.
-              Premiers pas en algorithmique et logique.
-              <!-- Modifiez selon votre vrai parcours -->
-            </p>
-          </div>
         </div>
-
-        <!-- ── Étape 2 : Licence 1ère année ── -->
-        <div class="timeline-item reveal-right">
-          <div class="timeline-dot">
-            <i class="fas fa-laptop-code"></i>
-          </div>
-          <div class="timeline-card">
-            <span class="timeline-date">2020 – 2021</span>  <!-- ← CHANGEZ -->
-            <h3 class="timeline-title">1ère année — Génie Informatique</h3>
-            <p class="timeline-school">Université / École — Votre ville</p>  <!-- ← CHANGEZ -->
-            <p class="timeline-desc">
-              Fondamentaux de l'informatique, algorithmique, introduction au
-              langage C, mathématiques discrètes, architecture des ordinateurs.
-            </p>
-          </div>
+        
+        <!-- Image/Illustration du développeur -->
+        <div class="hero-image">
+            <div class="image-wrapper">
+                <img id="ks" src="télécharger (6).jfif" alt="" srcset="">
+            </div>
         </div>
+    </section>
 
-        <!-- ── Étape 3 : Licence 2ème année ── -->
-        <div class="timeline-item reveal-left">
-          <div class="timeline-dot">
-            <i class="fas fa-code"></i>
-          </div>
-          <div class="timeline-card">
-            <span class="timeline-date">2021 – 2022</span>  <!-- ← CHANGEZ -->
-            <h3 class="timeline-title">2ème année — Génie Informatique</h3>
-            <p class="timeline-school">Université / École — Votre ville</p>  <!-- ← CHANGEZ -->
-            <p class="timeline-desc">
-              Structures de données, C++, bases de données SQL, développement web
-              (HTML/CSS/JS), systèmes d'exploitation, réseaux informatiques.
-            </p>
-          </div>
+    <!-- SECTION À PROPOS -->
+    <section id="about" class="about">
+        <div class="section-header">
+            <h2 class="section-title">À propos de moi</h2>
+            <div class="section-line"></div>
         </div>
-
-        <!-- ── Étape 4 : Licence 3ème année (en cours) ── -->
-        <div class="timeline-item reveal-right active-item">
-          <div class="timeline-dot pulse">
-            <i class="fas fa-graduation-cap"></i>
-          </div>
-          <div class="timeline-card current-card">
-            <span class="timeline-date">2022 – En cours ✓</span>  <!-- ← CHANGEZ -->
-            <h3 class="timeline-title">3ème année — Génie Informatique</h3>
-            <p class="timeline-school">Université / École — Votre ville</p>  <!-- ← CHANGEZ -->
-            <p class="timeline-desc">
-              Python avancé, génie logiciel, projets de groupe, stage en entreprise,
-              sécurité informatique, développement d'applications complètes.
-            </p>
-            <span class="badge-current"><i class="fas fa-circle"></i> En cours</span>
-          </div>
+        
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    Je suis <strong>Souleymane Kande</strong>, étudiant en troisième année de Génie Informatique, 
+                    animé par une véritable passion pour les technologies numériques. Mon parcours académique 
+                    m'a permis d'acquérir des compétences solides en développement logiciel, administration 
+                    système et gestion de bases de données.
+                </p>
+                <p>
+                    Curieux et autodidacte, j'aime explorer de nouvelles technologies et relever des défis techniques. 
+                    Je suis particulièrement intéressé par le développement full-stack et l'architecture des systèmes d'information.
+                </p>
+                
+                <!-- Informations personnelles -->
+                <div class="info-grid">
+                    <div class="info-item">
+                        <i class="fas fa-user"></i>
+                        <span>Souleymane Kande</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>3ème année Génie Informatique</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Disponible partout</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-language"></i>
+                        <span>Français, Anglais technique</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Statistiques animées -->
+            <div class="stats-container">
+                <div class="stat-card" data-count="10">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3 class="counter">0</h3>
+                    <p>Projets réalisés</p>
+                </div>
+                <div class="stat-card" data-count="8">
+                    <i class="fas fa-code"></i>
+                    <h3 class="counter">0</h3>
+                    <p>Langages maîtrisés</p>
+                </div>
+                <div class="stat-card" data-count="3">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3 class="counter">0</h3>
+                    <p>Années d'études</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-      </div><!-- fin .timeline -->
-    </div>
-  </section>
-
-  <!-- ================================================
-       SECTION CONTACT
-  ================================================ -->
-  <section class="contact reveal-section" id="contact">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">// 05</span>
-        <h2 class="section-title">Me <span class="accent">contacter</span></h2>
-        <div class="section-line"></div>
-      </div>
-
-      <div class="contact-grid">
-
-        <!-- Infos de contact à gauche -->
-        <div class="contact-info reveal-left">
-          <p class="contact-intro">
-            Vous avez un projet, une opportunité de stage ou juste envie d'échanger ?
-            N'hésitez pas à m'écrire !
-          </p>
-
-          <!-- Cartes de contact (remplissez vos vraies infos) -->
-          <div class="contact-cards">
-            <div class="contact-card">
-              <i class="fas fa-envelope"></i>
-              <div>
-                <span class="cc-label">Email</span>
-                <!-- ← CHANGEZ par votre email -->
-                <a href="mailto:votre.email@example.com" class="cc-value">votre.email@example.com</a>
-              </div>
-            </div>
-            <div class="contact-card">
-              <i class="fab fa-linkedin"></i>
-              <div>
-                <span class="cc-label">LinkedIn</span>
-                <!-- ← CHANGEZ par votre URL LinkedIn -->
-                <a href="https://linkedin.com/in/votreprofil" target="_blank" class="cc-value">linkedin.com/in/votreprofil</a>
-              </div>
-            </div>
-            <div class="contact-card">
-              <i class="fab fa-github"></i>
-              <div>
-                <span class="cc-label">GitHub</span>
-                <!-- ← CHANGEZ par votre URL GitHub -->
-                <a href="https://github.com/votrepseudo" target="_blank" class="cc-value">github.com/votrepseudo</a>
-              </div>
-            </div>
-            <div class="contact-card">
-              <i class="fas fa-map-marker-alt"></i>
-              <div>
-                <span class="cc-label">Localisation</span>
-                <!-- ← CHANGEZ par votre ville -->
-                <span class="cc-value">Conakry, Guinée</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Liens réseaux sociaux -->
-          <div class="social-links">
-            <!-- Remplacez # par vos vrais liens -->
-            <a href="#" class="social-btn" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="#" class="social-btn" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-btn" aria-label="Twitter/X" target="_blank"><i class="fab fa-x-twitter"></i></a>
-          </div>
+    <!-- SECTION COMPÉTENCES -->
+    <section id="skills" class="skills">
+        <div class="section-header">
+            <h2 class="section-title">Compétences techniques</h2>
+            <div class="section-line"></div>
         </div>
-
-        <!-- Formulaire de contact à droite -->
-        <div class="contact-form-wrap reveal-right">
-          <form class="contact-form" id="contactForm" novalidate>
-
-            <!-- Nom complet -->
-            <div class="form-group">
-              <label for="name">Votre nom</label>
-              <div class="input-wrap">
-                <i class="fas fa-user"></i>
-                <input type="text" id="name" name="name" placeholder="Ex : Mamadou Diallo" required />
-              </div>
-              <span class="form-error" id="nameError"></span>
+        
+        <div class="skills-grid">
+            <!-- Langages de programmation -->
+            <div class="skill-category">
+                <h3><i class="fas fa-code"></i> Langages</h3>
+                <div class="skill-items">
+                    <!-- Chaque compétence avec barre de progression animée -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>HTML/CSS</span>
+                            <span class="percentage">90%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" data-width="90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>JavaScript</span>
+                            <span class="percentage">85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" data-width="85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Python</span>
+                            <span class="percentage">80%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" data-width="80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>C</span>
+                            <span class="percentage">75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" data-width="75%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>C++</span>
+                            <span class="percentage">70%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" data-width="70%"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Email -->
-            <div class="form-group">
-              <label for="email">Votre email</label>
-              <div class="input-wrap">
-                <i class="fas fa-at"></i>
-                <input type="email" id="email" name="email" placeholder="exemple@email.com" required />
-              </div>
-              <span class="form-error" id="emailError"></span>
+            
+            <!-- Bases de données -->
+            <div class="skill-category">
+                <h3><i class="fas fa-database"></i> Bases de données</h3>
+                <div class="skill-items">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>SQL</span>
+                            <span class="percentage">85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" data-width="85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Oracle</span>
+                            <span class="percentage">80%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" data-width="80%"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Sujet -->
-            <div class="form-group">
-              <label for="subject">Sujet</label>
-              <div class="input-wrap">
-                <i class="fas fa-tag"></i>
-                <input type="text" id="subject" name="subject" placeholder="Objet de votre message" required />
-              </div>
-              <span class="form-error" id="subjectError"></span>
+            
+            <!-- Systèmes et Réseaux -->
+            <div class="skill-category">
+                <h3><i class="fas fa-server"></i> Systèmes & Réseaux</h3>
+                <div class="skill-items">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Windows Server</span>
+                            <span class="percentage">75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" data-width="75%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Linux</span>
+                            <span class="percentage">80%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" data-width="80%"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Message -->
-            <div class="form-group">
-              <label for="message">Votre message</label>
-              <div class="input-wrap textarea-wrap">
-                <i class="fas fa-pen"></i>
-                <textarea id="message" name="message" rows="5" placeholder="Bonjour Souleymane, je vous contacte pour…" required></textarea>
-              </div>
-              <span class="form-error" id="messageError"></span>
+            
+            <!-- Outils et technologies -->
+            <div class="skill-category">
+                <h3><i class="fas fa-tools"></i> Outils</h3>
+                <div class="skill-tags">
+                    <span class="tag">Git</span>
+                    <span class="tag">VS Code</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">VirtualBox</span>
+                    <span class="tag">Wireshark</span>
+                    <span class="tag">Postman</span>
+                    <span class="tag">Eclipse</span>
+                    <span class="tag">Jupyter</span>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Bouton d'envoi -->
-            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
-              <span class="btn-text"><i class="fas fa-paper-plane"></i> Envoyer le message</span>
-              <span class="btn-loading hidden"><i class="fas fa-spinner fa-spin"></i> Envoi…</span>
+    <!-- SECTION PROJETS -->
+    <section id="projects" class="projects">
+        <div class="section-header">
+            <h2 class="section-title">Mes projets</h2>
+            <div class="section-line"></div>
+            <p class="section-subtitle">Découvrez quelques-unes de mes réalisations</p>
+        </div>
+        
+        <!-- Filtres pour les projets -->
+        <div class="project-filters">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="python">Python</button>
+            <button class="filter-btn" data-filter="database">Base de données</button>
+            <button class="filter-btn" data-filter="system">Système</button>
+        </div>
+        
+        <!-- Grille des projets -->
+        <div class="projects-grid">
+            <!-- Projet 1 -->
+            <div class="project-card" data-category="web">
+                <div class="project-image">
+                    <!-- Remplacez le src par le chemin de votre image -->
+                    <img src="projet1.jpg" alt="Application E-commerce" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Application E-commerce</h3>
+                    <p>Site e-commerce complet avec panier, paiement et gestion des utilisateurs. Développé en HTML, CSS, JavaScript et base de données Oracle.</p>
+                    <div class="project-tech">
+                        <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Oracle</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projet 2 -->
+            <div class="project-card" data-category="python database">
+                <div class="project-image">
+                    <img src="projet2.jpg" alt="Système de gestion bibliothèque" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Gestion de Bibliothèque</h3>
+                    <p>Système complet de gestion de bibliothèque avec interface Python (Tkinter) et base de données SQL pour le suivi des livres et emprunts.</p>
+                    <div class="project-tech">
+                        <span>Python</span><span>SQL</span><span>Tkinter</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projet 3 -->
+            <div class="project-card" data-category="web database">
+                <div class="project-image">
+                    <img src="projet3.png" alt="Dashboard administrateur" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Dashboard Administrateur</h3>
+                    <p>Interface d'administration avec statistiques, graphiques et gestion CRUD. Backend Python Flask avec base de données Oracle.</p>
+                    <div class="project-tech">
+                        <span>Python</span><span>Flask</span><span>Oracle</span><span>JavaScript</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projet 4 -->
+            <div class="project-card" data-category="system">
+                <div class="project-image">
+                    <img src="projet4.png" alt="Configuration Windows Server" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Infrastructure Active Directory</h3>
+                    <p>Mise en place d'un domaine Windows Server avec Active Directory, DNS, DHCP et stratégies de groupe pour 50+ utilisateurs.</p>
+                    <div class="project-tech">
+                        <span>Windows Server</span><span>AD DS</span><span>DNS</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projet 5 -->
+            <div class="project-card" data-category="python">
+                <div class="project-image">
+                    <img src="projet5.jpg" alt="Web Scraper Python" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Web Scraper Automatisé</h3>
+                    <p>Script Python pour l'extraction automatique de données web avec BeautifulSoup et stockage en base SQL.</p>
+                    <div class="project-tech">
+                        <span>Python</span><span>BeautifulSoup</span><span>SQL</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projet 6 -->
+            <div class="project-card" data-category="system linux">
+                <div class="project-image">
+                    <img src="projet6.avif" alt="Serveur Linux" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-eye"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Serveur Web Linux</h3>
+                    <p>Configuration complète d'un serveur LAMP (Linux, Apache, MySQL, PHP) avec sécurisation et monitoring.</p>
+                    <div class="project-tech">
+                        <span>Linux</span><span>Apache</span><span>MySQL</span><span>Bash</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bouton voir plus -->
+        <div class="projects-more">
+            <button class="btn btn-primary" id="loadMore">
+                <i class="fas fa-plus"></i> Voir plus de projets
             </button>
-
-            <!-- Message de succès (caché par défaut) -->
-            <div class="form-success hidden" id="formSuccess">
-              <i class="fas fa-check-circle"></i>
-              Message envoyé ! Je vous répondrai rapidement.
-            </div>
-
-          </form>
         </div>
+    </section>
 
-      </div>
-    </div>
-  </section>
+    <!-- SECTION FORMATION -->
+    <section id="education" class="education">
+        <div class="section-header">
+            <h2 class="section-title">Formation</h2>
+            <div class="section-line"></div>
+        </div>
+        
+        <!-- Timeline verticale -->
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2025 - Présent</div>
+                    <h3>Licence 3 Génie Informatique</h3>
+                    <p>Approfondissement en développement logiciel, administration système, réseaux et bases de données avancées.</p>
+                    <div class="timeline-badge">En cours</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2024 - 2025</div>
+                    <h3>Licence 2 Génie Informatique</h3>
+                    <p>Fondamentaux de la programmation (C, Python), algorithmique, introduction aux bases de données et réseaux.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2023 - 2024</div>
+                    <h3>Licence 1 Génie Informatique</h3>
+                    <p>Introduction à l'informatique, mathématiques appliquées, logique de programmation et architecture des ordinateurs.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2022 - 2023</div>
+                    <h3>Baccalauréat Scientifique</h3>
+                    <p>Mention Bien - Spécialité Mathématiques et Sciences Physiques.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- ================================================
-       PIED DE PAGE (FOOTER)
-  ================================================ -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <span class="logo-bracket">&lt;</span>SK<span class="logo-bracket">/&gt;</span>
-      </div>
-      <p class="footer-text">
-        Conçu & développé avec <span class="heart">♥</span> par
-        <strong>Souleymane Kande</strong> — 2024
-        <!-- ← Mettez à jour l'année si besoin -->
-      </p>
-      <p class="footer-stack">
-        HTML · CSS · JavaScript · Passion
-      </p>
-    </div>
+    <!-- SECTION CONTACT -->
+    <section id="contact" class="contact">
+        <div class="section-header">
+            <h2 class="section-title">Contactez-moi</h2>
+            <div class="section-line"></div>
+            <p class="section-subtitle">N'hésitez pas à me contacter pour toute opportunité ou collaboration</p>
+        </div>
+        
+        <div class="contact-container">
+            <!-- Formulaire de contact -->
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" required placeholder="Votre nom complet">
+                    <label for="name">Nom complet</label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                    <label for="email">Adresse email</label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" id="subject" name="subject" required placeholder="Sujet du message">
+                    <label for="subject">Sujet</label>
+                </div>
+                
+                <div class="form-group">
+                    <textarea id="message" name="message" rows="5" required placeholder="Votre message..."></textarea>
+                    <label for="message">Message</label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-submit">
+                    <i class="fas fa-paper-plane"></i> Envoyer le message
+                </button>
+            </form>
+            
+            <!-- Informations de contact -->
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>souleymanekande629@email.com</p>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Téléphone</h3>
+                    <p>+224 629 237 341</p>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Localisation</h3>
+                    <p>Conakry</p>
+                </div>
+                
+                <!-- Réseaux sociaux dans la section contact -->
+                <div class="contact-social">
+                    <h3>Suivez-moi</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">&lt;SK/&gt;</div>
+            <p>&copy; 2026 Souleymane Kande. Tous droits réservés.</p>
+        </div>
+    </footer>
+
     <!-- Bouton retour en haut -->
-    <a href="#accueil" class="back-to-top" id="backToTop" aria-label="Retour en haut">
-      <i class="fas fa-arrow-up"></i>
-    </a>
-  </footer>
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-  <!-- Script principal (chargé en dernier pour que le DOM soit prêt) -->
-  <script src="script.js"></script>
-
+    <!-- Lien vers le fichier JavaScript externe -->
+    <script src="script.js"></script>
 </body>
 </html>
