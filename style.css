@@ -463,7 +463,7 @@ body {
 }
 
 /* Cercle décoratif rotatif */
-/*
+
 .image-wrapper::before {
     content: '';
     position: absolute;
@@ -471,9 +471,9 @@ body {
     height: 500px;
     background: conic-gradient(from 0deg, transparent, var(--primary-color), transparent, var(--accent-color), transparent, var(--secondary-color));
     animation: rotate 8s linear infinite;
-    opacity: 0.3;
+    opacity: 0.05;
 }
-*/
+
 
 .code-snippet {
     background: rgba(0, 0, 0, 0.5);
